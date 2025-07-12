@@ -7,3 +7,13 @@ steps to mongo connection
 
 use ascyn await for operations
 use the mongo commands for operations
+
+
+
+MVC 
+Views - for the frontend
+Models - for the database models creation from the structure
+controllers - used for handling the https methods PUT,POST,GET etc
+connection.js - have the database connection code
+middlewares - used for middleware code like file handling for logs 
+routes - have all the http routes methods using the functions or logics defined in controllers
