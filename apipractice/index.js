@@ -54,8 +54,9 @@ app.get('/users', async(req,res) => {
     res.send(html);
 });
 
-app.get('/api/users', (req, res) => {
-    res.json(users);
+app.get('/api/users', async(req, res) => {
+    const users = await User.find({});
+    return res.json(users);
 });
 
 

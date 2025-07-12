@@ -1,0 +1,9 @@
+nodemon npm package 
+
+steps to mongo connection
+1. make connection
+2. write the schema structure
+3. use the schema to form MODEL
+
+use ascyn await for operations
+use the mongo commands for operations
