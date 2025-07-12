@@ -1,7 +1,8 @@
-const express = require('express').Router();
+const express = require('express');
 
 const router = express.Router();
 
+const { handleGetAllUsers, updateUserById, getUserById, deleteUserById, handleCreateUser } = require('../controllers/user'); // Importing the controller function
 
 // router.get('/users', async(req,res) => {
 //     const allUsers = await User.find({});
@@ -13,42 +14,13 @@ const router = express.Router();
 //     res.send(html);
 // });
 
-router.get('/', async (req, res) => {
-    const users = await User.find({});
-    return res.json(users);
-});
+router.get('/', handleGetAllUsers); // Route to get all users
 
+router.post('/', handleCreateUser); // Route to create a new user
 
-router.post('/', async (req, res) => {
-    const body = req.body;
-    const result = await User.create({
-        firstname: body.first_name,
-        lastname: body.last_name,
-        email: body.email,
-        gender: body.gender,
-        jobtitle: body.job_title
-    })
-    console.log(result);
-    return res.status(201).json({ status: 'Success', id: result._id });
-});
+router.route('/:id') // Route to handle operations on a specific user by ID
+    .get(getUserById) // Get user by ID
+    .patch(updateUserById) // Update user by ID
+    .delete(deleteUserById); // Delete user by ID
 
-router.route('/:id')
-    .get(async (req, res) => {
-        const user = await User.findById(req.params.id);
-
-        if (user) {
-            res.json(user);
-        } else {
-            res.status(404).send('User not found');
-        }
-    })
-    .patch(async(req, res) => {
-        await User.findByIdAndUpdate(req.params.id, {lastname: "changed"});
-        return res.json({ status: 'success' })
-    })
-    .delete(async (req, res) => {
-        await User.findByIdAndDelete(req.params.id);
-        return res.json({ status: 'success' })
-    });
-
-    module.exports = router;
+    module.exports = router; // Exporting the router to be used in the main app

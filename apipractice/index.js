@@ -84,7 +84,7 @@ app.route('/api/users/:id')
         }
     })
     .patch(async(req, res) => {
-        await User.findByIdAndUpdate(req.params.id, {lastname: "changed"});
+        await User.findByIdAndUpdate(req.params.id, {lastname: "malav"});
         return res.json({ status: 'success' })
     })
     .delete(async (req, res) => {

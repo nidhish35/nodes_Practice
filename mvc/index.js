@@ -1,6 +1,6 @@
 const express = require('express');
-const { connectToMongoDB } = require('./connection'); // Importing the connection function
-const {logRequest} = require('./middlewares'); // Importing the logRequest middleware
+const connectToMongoDB = require('./connection.js'); // Importing the connection function
+const { logRequest } = require('./middlewares'); // Importing the logRequest middleware
 const app = express();
 const port = 8000;
 
@@ -11,9 +11,13 @@ app.use(express.json()); // Middleware to parse JSON bodies
 
 app.use(logRequest('log.txt')); // Using the logRequest middleware
 
-app.use('/user', userRouter);
+app.use('/api/user', userRouter);
 
-connectToMongoDB('mongodb://localhost:27017/mvc_app');
+connectToMongoDB('mongodb://localhost:27017/mvc_app').then(() => {
+    console.log('Connected to MongoDB');
+}).catch(err => {
+    console.error('Error connecting to MongoDB:', err);
+});
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
